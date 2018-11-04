@@ -7,9 +7,14 @@ class Game:
     def __init__(self, arr):
         self.frame = arr
         self.zero_position = find_zero(self)
+        # odejmujemy 1 od rozmiaru macierzy numpy
         self.frame_size = tuple(map(operator.sub, self.frame.shape, (1, 1)))
-        # Create goal matrix
+
+        # tworzymy mACIERZ
+        #tworzymy macierz 1 wymiarowa [1,2,3,4,5]
+        # zmieniamy kaTLT
         self.goal_matrix = np.arange(1, self.frame.size+1).reshape(arr.shape)
+        # USTAWIAMY OSTATNI ELEMENT NA ZERO
         self.goal_matrix[-1][-1] = 0
 
     def available_moves(self, zero_position):
@@ -63,13 +68,16 @@ class Game:
         new_frame = np.copy(state.frame)
 
         # swap elements
+
         new_frame[state.zero_position], new_frame[new_place] = \
             new_frame[new_place], new_frame[state.zero_position]
+
         # state.available_moves.pop(direction)
         return State(new_frame, state, direction, new_place, self.available_moves(new_place))
 
     def __repr__(self):
         return str(self.frame)
+
 
 
 def find_zero(state):
@@ -78,7 +86,7 @@ def find_zero(state):
     :param state
     :return: tuple of zero coordinates
     """
-
+    # Zwraca pozycje zera w mACIERZY
     temp = np.where(state.frame == 0)
     temp = tuple(np.concatenate(temp, axis=0))
     return temp
